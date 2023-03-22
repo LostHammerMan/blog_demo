@@ -1,0 +1,60 @@
+
+
+spring:
+  profiles:
+    active: local
+  mvc:
+    view:
+      prefix: /WEB-INF/views/
+      suffix: .jsp
+    static-path-pattern: /static/**
+
+
+  devtools:
+    livereload:
+      enabled: true
+
+  datasource:
+    driver-class-name: com.p6spy.engine.spy.P6SpyDriver
+    url: jdbc:p6spy:mysql://localhost:3306/blog_demo
+    username: root
+    password: 1234
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+      use-new-id-generator-mappings: false # false : jpa 의 기본 넘버링 전략 사용하지 않음
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl # Entity 만들 때 변수명 그래로 테이블 필드 작성
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true # format 에 맞게 정렬(설정 안하면 sql 한 줄로 출력됨)
+        use_sql_comments: true
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+  web:
+    resources:
+      add-mappings: true
+#      static-locations: classpath:/static/
+
+  # lazy-loading 으로 인한 empty-beans 생길 경우 빈 객체 허락
+  jackson:
+    serialization:
+      fail-on-empty-beans: false
+
+server:
+  port: 8080
+  servlet:
+    context-path: /blog_demo/
+    encoding:
+      charset: UTF-8
+      force: true
+      enabled: true
+
+logging:
+  level:
+    org.hibernate.sql: info
+
+
+
+# application.yml : web, root-context, servlet-context 합본
